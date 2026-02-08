@@ -15,7 +15,3 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-# Example usage:
-if __name__ == "__main__":
-    logging.info("This is an info message.")
-    logging.error("This is an error message.")

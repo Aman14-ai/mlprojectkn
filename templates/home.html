@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <style>
+        /* ===== CSS Reset & Base ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            color: #e0e0e0;
+        }
+
+        /* ===== Animated Background Blobs ===== */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            width: 500px;
+            height: 500px;
+            background: #7f5af0;
+            top: -100px;
+            left: -100px;
+        }
+
+        body::after {
+            width: 400px;
+            height: 400px;
+            background: #2cb67d;
+            bottom: -80px;
+            right: -80px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 40px) scale(1.15); }
+        }
+
+        /* ===== Login Card ===== */
+        .login {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 44px 36px;
+            max-width: 580px;
+            width: 100%;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* ===== Top Title ===== */
+        .login > h1 {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #7f5af0, #2cb67d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+
+        /* ===== Form Legend Title ===== */
+        form > h1 {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        legend {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #ffffffcc;
+            letter-spacing: 0.3px;
+            position: relative;
+            display: inline-block;
+        }
+
+        legend::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, transparent, #7f5af0, #2cb67d, transparent);
+            border-radius: 2px;
+        }
+
+        /* ===== Form Groups ===== */
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+
+        /* ===== Labels ===== */
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffffb3;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* ===== Inputs & Selects ===== */
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #e0e0e0;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-control:hover {
+            border-color: rgba(127, 90, 240, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-control:focus {
+            border-color: #7f5af0;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(127, 90, 240, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: #ffffff55;
+        }
+
+        /* Select dropdown arrow */
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237f5af0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        select.form-control option {
+            background: #24243e;
+            color: #e0e0e0;
+            padding: 10px;
+        }
+
+        /* Number input spin buttons */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+
+        /* ===== Submit Button ===== */
+        .btn.btn-primary {
+            display: block;
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+            color: #fff;
+            background: linear-gradient(135deg, #7f5af0, #6341d1);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            box-shadow: 0 4px 15px rgba(127, 90, 240, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn.btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+
+        .btn.btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(127, 90, 240, 0.5);
+            background: linear-gradient(135deg, #8b6cf0, #7f5af0);
+        }
+
+        .btn.btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn.btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(127, 90, 240, 0.4);
+        }
+
+        /* ===== Result Text ===== */
+        .login > h2 {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            padding: 16px 20px;
+            background: rgba(44, 182, 125, 0.1);
+            border: 1px solid rgba(44, 182, 125, 0.25);
+            border-radius: 12px;
+            color: #2cb67d;
+            letter-spacing: 0.3px;
+            line-height: 1.5;
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(127, 90, 240, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(127, 90, 240, 0.5);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 640px) {
+            body {
+                padding: 24px 12px;
+            }
+            .login {
+                padding: 32px 24px 28px;
+                border-radius: 18px;
+            }
+            .login > h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+       <h1>Student Exam Performance Indicator</h1>
+
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
+        <h1>
+            <legend>Student Exam Performance Prediction</legend>
+        </h1>
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select class="form-control" name="gender" placeholder="Enter you Gender" required>
+                <option class="placeholder" selected disabled value="">Select your Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Race or Ethnicity</label>
+            <select class="form-control" name="ethnicity" placeholder="Enter you ethnicity" required>
+                <option class="placeholder" selected disabled value="">Select Ethnicity</option>
+                <option value="group A">Group A</option>
+                <option value="group B">Group B</option>
+                <option value="group C">Group C</option>
+                <option value="group D">Group D</option>
+                <option value="group E">Group E</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Parental Level of Education</label>
+            <select class="form-control" name="parental_level_of_education"
+                placeholder="Enter you Parent Education" required>
+                <option class="placeholder" selected disabled value="">Select Parent Education</option>
+                <option value="associate's degree">associate's degree</option>
+                <option value="bachelor's degree">bachelor's degree</option>
+                <option value="high school">high school</option>
+                <option value="master's degree">master's degree</option>
+                <option value="some college">some college</option>
+                <option value="some high school">some high school</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Lunch Type</label>
+            <select class="form-control" name="lunch" placeholder="Enter you Lunch" required>
+                <option class="placeholder" selected disabled value="">Select Lunch Type</option>
+                <option value="free/reduced">free/reduced</option>
+                <option value="standard">standard</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Test Preparation Course</label>
+            <select class="form-control" name="test_preparation_course" placeholder="Enter you Course"
+                required>
+                <option class="placeholder" selected disabled value="">Select Test Course</option>
+                <option value="none">None</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Writing Score out of 100</label>
+            <input class="form-control" type="number" name="reading_score"
+                placeholder="Enter your Writing score" min="0" max="100" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Reading Score out of 100</label>
+            <input class="form-control" type="number" name="writing_score"
+                placeholder="Enter your Reading Score" min="0" max="100" />
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict your Maths Score" />
+        </div>
+    </form>
+    <h2>THE prediction is {{results}}</h2>
+    </div>
+</body>
+</html>

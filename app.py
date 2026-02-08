@@ -4,13 +4,11 @@ import pandas as pd
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
 from src.logger import logging
 
+
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
 
-@app.route('/predictdata',methods=['GET','POST'])
+@app.route('/',methods=['GET','POST'])
 def predict_datapoint():
     if request.method=='GET':
         return render_template('home.html')
@@ -40,5 +38,6 @@ def predict_datapoint():
         return render_template('home.html',results=np.round(results[0],2))
     
 if __name__=="__main__":
-    print("Running the Flask App at http://localhost:5000/")
-    app.run(host="0.0.0.0",port=5000,debug=True)
+    port = 3000
+    print("running on http://localhost:",port)
+    app.run(host="0.0.0.0",port=port)

@@ -38,6 +38,6 @@ def predict_datapoint():
         return render_template('home.html',results=np.round(results[0],2))
     
 if __name__=="__main__":
-    port = 5000
+    port = 3000
     print("running on http://localhost:",port)
     app.run(host="0.0.0.0",port=port)
